@@ -5,10 +5,15 @@ import Pairs from '../components/Pairs'
 
 export default function Home({ final_results }) {
   // check if there is a selected base in the local storage
-  const [selected_base, setSelectedBase] = useState(
-    localStorage.getItem('selected_base') ? localStorage.getItem('selected_base') : 'USD'
-  )
+  const [selected_base, setSelectedBase] = useState("USD")
   let selected_base_object = final_results.filter((result) => result.key === selected_base)[0]
+  // on page load, check if there is a selected base in the local storage
+  useEffect(() => {
+    if (localStorage.getItem("selected_base")) {
+      setSelectedBase(localStorage.getItem("selected_base"))
+    }
+  }, [])
+
   useEffect(() => {
     // save selected base to local storage
     localStorage.setItem('selected_base', selected_base)
