@@ -4,9 +4,14 @@ import { useQuery } from 'react-query'
 import Pairs from '../components/Pairs'
 
 export default function Home({ final_results }) {
-  const [selected_base, setSelectedBase] = useState('AED')
+  // check if there is a selected base in the local storage
+  const [selected_base, setSelectedBase] = useState(
+    localStorage.getItem('selected_base') ? localStorage.getItem('selected_base') : 'USD'
+  )
   let selected_base_object = final_results.filter((result) => result.key === selected_base)[0]
   useEffect(() => {
+    // save selected base to local storage
+    localStorage.setItem('selected_base', selected_base)
     selected_base_object = final_results.filter((result) => result.key === selected_base)[0]
   }, [selected_base])
   return (
